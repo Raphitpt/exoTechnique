@@ -28,18 +28,20 @@
             >
                 <router-link
                     to="/"
-                    exact-active-class="text-sky-500"
+                    exact-active-class="text-blue-700"
                     class="my-auto"
                     ><li>Accueil</li></router-link
                 >
                 <router-link
                     to="/contact"
-                    exact-active-class="text-sky-500"
+                    exact-active-class="text-blue-700"
                     class="my-auto"
                     ><li>Contact</li></router-link
                 >
             </ul>
-            <div class="hidden md:block my-auto bg-sky-500 p-3 rounded-lg">
+            <div
+                class="hidden md:block my-auto bg-blue-700 hover:bg-blue-800 p-3 rounded-lg"
+            >
                 <router-link to="/login" class="text-white"
                     >Se connecter</router-link
                 >
