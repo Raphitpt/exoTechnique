@@ -9,11 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
+        Schema::create('taxes', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->float('value');
+            $table->timestamps();
+        });
+
         Schema::create('types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('tax_id')->constrained('taxes')->cascadeOnDelete();
             $table->timestamps();
         });
 
@@ -24,21 +32,14 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('taxes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->float('value');
-            $table->timestamps();
-        });
-
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('type_id')->constrained('types')->cascadeOnDelete();
             $table->integer('age');
             $table->longText('description');
             $table->enum('state', ['en vente', 'vendu']);
             $table->longText('pictures');
+            $table->foreignId('type_id')->constrained('types')->cascadeOnDelete();
             $table->foreignId('race_id')->constrained('races')->cascadeOnDelete();
             $table->float('price');
             $table->timestamps();
@@ -48,16 +49,16 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('types');
-        Schema::table('races', function (Blueprint $table) {
-            $table->dropForeign(['type_id']);
-        });
-        Schema::dropIfExists('taxes');
         Schema::table('animals', function (Blueprint $table) {
             $table->dropForeign(['type_id']);
             $table->dropForeign(['race_id']);
         });
+
+        Schema::dropIfExists('animals');
+        Schema::dropIfExists('races');
+        Schema::dropIfExists('types');
+        Schema::dropIfExists('taxes');
     }
 };

@@ -9,7 +9,7 @@ class Race extends Model
 {
     use HasFactory;
 
-    public function types()
+    public function type()
     {
         return $this->belongsTo(Type::class);
     }

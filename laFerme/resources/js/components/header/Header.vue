@@ -24,7 +24,7 @@
             </button>
             <ul
                 :class="{ 'hidden md:flex': !isMenuOpen }"
-                class="flex-col md:flex-row items-center justify-center gap-4 md:gap-20 flex-grow"
+                class="hidden md:flex flex-col md:flex-row items-center justify-center gap-4 md:gap-20 flex-grow"
             >
                 <router-link
                     to="/"
@@ -41,10 +41,16 @@
             </ul>
             <div
                 class="hidden md:block my-auto bg-blue-700 hover:bg-blue-800 p-3 rounded-lg"
+                v-if="!isAuthenticated"
             >
                 <router-link to="/login" class="text-white"
                     >Se connecter</router-link
                 >
+            </div>
+            <div v-else class="hidden md:block">
+                <p>
+                    <strong v-if="isAuthenticated">{{ Name }}</strong>
+                </p>
             </div>
         </nav>
         <ul
@@ -63,21 +69,35 @@
                 class="my-auto"
                 ><li>Contact</li></router-link
             >
-            <div class="my-auto bg-sky-500 p-3 rounded-lg">
+            <div
+                class="my-auto bg-blue-700 hover:bg-blue-800 p-3 rounded-lg"
+                v-if="!isAuthenticated"
+            >
                 <router-link to="/login" class="text-white"
                     >Se connecter</router-link
                 >
+            </div>
+            <div v-else>
+                <p>
+                    <strong v-if="isAuthenticated">{{ Name }}</strong>
+                </p>
             </div>
         </ul>
     </header>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
 };
+const isAuthenticated = computed(() => store.getters.isAuthenticated);
+const Name = computed(() => store.getters.Name);
 </script>

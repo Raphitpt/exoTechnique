@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tax extends Model
 {
     use HasFactory;
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }

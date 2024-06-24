@@ -13,6 +13,10 @@ class Type extends Model
     {
         return $this->hasMany(Race::class);
     }
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class);
+    }
 
     public function animals()
     {

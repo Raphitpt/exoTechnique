@@ -9,12 +9,12 @@ class Animal extends Model
 {
     use HasFactory;
 
-    public function types()
+    public function type()
     {
         return $this->belongsTo(Type::class);
     }
 
-    public function races()
+    public function race()
     {
         return $this->belongsTo(Race::class);
     }
