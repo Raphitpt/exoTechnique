@@ -21,7 +21,7 @@ LaFerme est une application web développée sur Laravel, avec Vue.js et Tailwin
 
 Ceci est une V1 d'un projet fictif, que j'ai dû réaliser lors d'un exercice technique pour l'agence bordelaise Mink.
 
-Temps passé : **16 heures**
+Temps passé : **17 heures**
 
 
 ## Installation
