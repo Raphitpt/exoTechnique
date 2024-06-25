@@ -1,6 +1,7 @@
 <template>
     <div class="flex items-start justify-start flex-col max-h-screen h-screen">
         <p v-if="errorMes" class="text-red-500">{{ errorMes }}</p>
+
         <form
             @submit.prevent="modifyAnimal"
             class="max-w-lg w-full mx-auto h-72 mt-52"
@@ -181,9 +182,9 @@ const fetchAnimal = async () => {
     try {
         const response = await axios.get(`/api/animals/${props.id}`);
         animalData.value = response.data;
-        console.log(animalData.value);
     } catch (error) {
         console.error(error);
+        router.push("/");
         errorMes.value = "Erreur lors de la récupération de l'animal.";
     }
 };

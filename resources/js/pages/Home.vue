@@ -41,7 +41,9 @@
                 class="p-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md"
                 aria-label="Filtrer par type"
             >
-                <option value disabled selected>Choisissez un type</option>
+                <option value="null" disabled selected>
+                    Choisissez un type
+                </option>
                 <option value="0">Tous les types</option>
                 <option v-for="type in types" :key="type.id" :value="type.id">
                     {{ type.name }}
@@ -57,8 +59,11 @@
                 class="p-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md"
                 aria-label="Filtrer par race"
             >
-                <option value disabled selected>Choisissez une race</option>
-                <option value="0" v-if="selectedType != '0'">
+                <option value="" disabled selected>Choisissez une race</option>
+                <option
+                    value="0"
+                    v-if="selectedType !== 'null' && selectedType !== '0'"
+                >
                     Toutes les races
                 </option>
                 <option v-for="race in races" :key="race.id" :value="race.id">
@@ -92,7 +97,7 @@ const store = useStore();
 const animals = ref([]);
 const types = ref([]);
 const races = ref([]);
-const selectedType = ref("");
+const selectedType = ref("null");
 const selectedRace = ref("");
 const selectedSort = ref("AZ");
 const isLoading = ref(false);

@@ -50,6 +50,7 @@ const routes = [
             }
         },
     },
+    { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
 export default createRouter({
