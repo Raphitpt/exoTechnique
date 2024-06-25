@@ -23,7 +23,6 @@ Ceci est une V1 d'un projet fictif, que j'ai dû réaliser lors d'un exercice te
 
 Temps passé : **16 heures**
 
-Voici le texte corrigé :
 
 ## Installation
 
