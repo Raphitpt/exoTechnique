@@ -12,7 +12,7 @@ class RacesController extends Controller
         $race = Race::where("type_id", $request->type_id)->get();
 
         if ($race->isEmpty()) {
-            return response()->json(['error'], 404);
+            return response()->json(['message' => 'Animaux non trouvés'], 200);
         }
 
         $raceData = $race->map(function ($race) {

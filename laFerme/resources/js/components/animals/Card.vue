@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-w-80 max-w-sm bg-white border border-gray-200 rounded-lg shadow"
+        class="max-w-80 min-w-80 bg-white border border-gray-200 rounded-lg shadow"
     >
         <img
             class="rounded-t-lg object-cover h-56 w-full"
@@ -28,7 +28,10 @@
             </p>
 
             <p class="mb-3 font-normal text-gray-700">
-                {{ animal.description }}
+                {{
+                    animal.description.substring(0, 25) +
+                    (animal.description.length > 25 ? "..." : "")
+                }}
             </p>
 
             <h6 class="mb-2">
@@ -63,7 +66,7 @@
                 <router-link
                     v-if="isAuthenticated"
                     :to="'/animals/edit/' + animal.id"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"
                     >Modifier</router-link
                 >
             </div>

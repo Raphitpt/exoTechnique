@@ -32,9 +32,13 @@ const store = createStore({
                 });
         },
         logout({ commit }) {
-            return axios.post("api/auth/logout").then(() => {
-                commit("clearAuth");
-            });
+            return axios
+                .post("api/auth/logout", {
+                    token: localStorage.getItem("token"),
+                })
+                .then(() => {
+                    commit("clearAuth");
+                });
         },
     },
     getters: {

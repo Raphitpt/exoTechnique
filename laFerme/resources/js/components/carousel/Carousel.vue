@@ -76,7 +76,6 @@ const prevSlide = () => {
     }
 };
 
-// Reset index when images change
 watch(
     () => props.images,
     () => {

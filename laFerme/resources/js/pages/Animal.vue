@@ -34,7 +34,6 @@
                     }}
                     € TTC
                 </p>
-                <!-- Remaining details -->
             </div>
             <carousel
                 v-if="animalData.pictures"

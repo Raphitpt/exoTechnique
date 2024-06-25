@@ -12,6 +12,8 @@ Route::get('/animals', AnimalController::class . '@index')->name('animals.index'
 Route::get('/animals/{id}', AnimalController::class . '@show')->name('animals.show');
 Route::get('/races/{type_id}', RacesController::class . '@index')->name('races.index');
 Route::get('/types', TypesController::class . '@index')->name('types.index');
+Route::get('/animals/type/{type_id}', AnimalController::class . '@findByType')->name('animals.types.index');
+Route::get('animals/race/{type_id}/{race_id}', AnimalController::class . '@findByRace')->name('animals.races.index');
 
 // Routes CRUD pour les animaux nécessitant une authentification
 Route::middleware(['auth:api'])->group(function () {

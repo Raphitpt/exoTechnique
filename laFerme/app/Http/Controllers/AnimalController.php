@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
-use App\Models\Type;
-use App\Models\Race;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 
 class AnimalController extends Controller
 {
     public function index(Request $request)
     {
-        $animals = Animal::with(['type.tax', 'race'])->get();
+        $animals = Animal::with(['type.tax', 'race'])->orderBy('name', 'asc')->get();
 
         if ($animals->isEmpty()) {
             return response()->json(['error' => 'Animaux non trouvés'], 404);
@@ -56,7 +56,6 @@ class AnimalController extends Controller
 
         $animal = new Animal();
 
-        // Stocker les chemins des images
         $picturesPaths = [];
         if ($request->hasFile('pictures')) {
             foreach ($request->file('pictures') as $file) {
@@ -66,7 +65,6 @@ class AnimalController extends Controller
             }
         }
 
-        // Mettre à jour les données de l'animal
         $animal->name = $request->name;
         $animal->type_id = $request->type_id;
         $animal->age = $request->age;
@@ -78,7 +76,7 @@ class AnimalController extends Controller
         $animal->race_id = $request->race_id;
         $animal->price = $request->price;
 
-        // Sauvegarder l'animal
+
         try {
             $animal->save();
         } catch (\Exception $e) {
@@ -141,7 +139,6 @@ class AnimalController extends Controller
 
         $animal = Animal::findOrFail($id);
 
-        // Stocker les chemins des images
         $picturesPaths = [];
         if ($request->hasFile('pictures')) {
             foreach ($request->file('pictures') as $file) {
@@ -151,7 +148,6 @@ class AnimalController extends Controller
             }
         }
 
-        // Mettre à jour les données de l'animal
         $animal->name = $request->name;
         $animal->type_id = $request->type_id;
         $animal->age = $request->age;
@@ -163,7 +159,6 @@ class AnimalController extends Controller
         $animal->race_id = $request->race_id;
         $animal->price = $request->price;
 
-        // Sauvegarder l'animal
         try {
             $animal->save();
         } catch (\Exception $e) {
@@ -190,5 +185,73 @@ class AnimalController extends Controller
                 'message' => 'Impossible de supprimer l\'animal. Veuillez réessayer plus tard.'
             ], 500);
         }
+    }
+
+    public function findByType(Request $request, $type_id)
+    {
+
+        if ($type_id == 0) {
+            $animals = Animal::with(['type.tax', 'race'])->orderBy('name', 'asc')->get();
+        } else {
+            $animals = Animal::where('type_id',  $type_id)->with(['type.tax', 'race'])->orderBy('name', 'asc')->get();
+        }
+
+
+
+        if ($animals->isEmpty()) {
+            return response()->json(['message' => 'Animaux non trouvés'], 200);
+        }
+
+        $animalData = $animals->map(function ($animal) {
+            return [
+                'id' => $animal->id,
+                'name' => $animal->name,
+                'type' => $animal->type->name ?? null,
+                'type_id' => $animal->type_id,
+                'tax' => $animal->type->tax->value ?? null,
+                'race' => $animal->race->name ?? null,
+                'race_id' => $animal->race_id,
+                'age' => $animal->age,
+                'description' => $animal->description,
+                'state' => $animal->state,
+                'pictures' => json_decode($animal->pictures),
+                'price' => $animal->price,
+            ];
+        });
+
+        return response()->json($animalData);
+    }
+
+    public function findByRace(Request $request, $type_id, $race_id)
+    {
+
+        if ($race_id == 0) {
+            $animals = Animal::where('type_id',  $type_id)->with(['type.tax', 'race'])->orderBy('name', 'asc')->get();
+        } else {
+            $animals = Animal::where('race_id',  $race_id)->with(['type.tax', 'race'])->orderBy('name', 'asc')->get();
+        }
+
+        if ($animals->isEmpty()) {
+            return response()->json(['message' => 'Animaux non trouvés'], 200);
+        }
+
+        $animalData = $animals->map(function ($animal) {
+            return [
+                'id' => $animal->id,
+                'name' => $animal->name,
+                'type' => $animal->type->name ?? null,
+                'type_id' => $animal->type_id,
+                'tax' => $animal->type->tax->value ?? null,
+                'race' => $animal->race->name ?? null,
+                'race_id' => $animal->race_id,
+                'age' => $animal->age,
+                'description' => $animal->description,
+                'state' => $animal->state,
+                'pictures' => json_decode($animal->pictures),
+                'price' => $animal->price,
+            ];
+        });
+
+        return response()->json($animalData);
     }
 }

@@ -32,12 +32,12 @@
                     class="my-auto"
                     ><li>Accueil</li></router-link
                 >
-                <router-link
+                <!-- <router-link
                     to="/contact"
                     exact-active-class="text-blue-700"
                     class="my-auto"
                     ><li>Contact</li></router-link
-                >
+                > -->
             </ul>
             <div
                 class="hidden md:block my-auto bg-blue-700 hover:bg-blue-800 p-3 rounded-lg"
@@ -49,7 +49,9 @@
             </div>
             <div v-else class="hidden md:block">
                 <p>
-                    <strong v-if="isAuthenticated">{{ Name }}</strong>
+                    <button @click="logout">
+                        <strong v-if="isAuthenticated">{{ Name }}</strong>
+                    </button>
                 </p>
             </div>
         </nav>
@@ -63,12 +65,12 @@
                 class="my-auto"
                 ><li>Accueil</li></router-link
             >
-            <router-link
+            <!-- <router-link
                 to="/contact"
                 exact-active-class="text-sky-500"
                 class="my-auto"
                 ><li>Contact</li></router-link
-            >
+            > -->
             <div
                 class="my-auto bg-blue-700 hover:bg-blue-800 p-3 rounded-lg"
                 v-if="!isAuthenticated"
@@ -97,6 +99,12 @@ const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
+};
+
+const logout = () => {
+    if (confirm("Voulez-vous vous déconnecter ?")) {
+        store.dispatch("logout");
+    }
 };
 const isAuthenticated = computed(() => store.getters.isAuthenticated);
 const Name = computed(() => store.getters.Name);
