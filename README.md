@@ -78,6 +78,12 @@ Pour l'import d'image, il faut faire un lien pour les dossiers :
 php artisan storage:link
 ```
 
+**Pour lancer le serveur, il est nécessaire de générer une clé d'application :**
+
+```sh
+php artisan key:generate
+```
+
 **Pour créer un compte back-office**
 
 Il faut exécuter la commande suivante. Il vous sera demandé le **nom**, l'**email**, et le **mot de passe**.
